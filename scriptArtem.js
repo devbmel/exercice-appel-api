@@ -2,6 +2,7 @@ const cardsDiv = document.createElement("div");
 cardsDiv.classList.add("cards-div");
 document.body.appendChild(cardsDiv);
 let userIndex = 0;
+let allUsers;
 
 const createCard = (data) => {
   const userCard = document.createElement("div");
@@ -26,8 +27,10 @@ const createCard = (data) => {
 fetch("https://jsonplaceholder.typicode.com/users")
   .then((response) => response.json())
   .then((data) => {
+    allUsers = data;
+    console.log(allUsers.length);
     for (let i = userIndex; i < userIndex + 5; i++) {
-      createCard(data[i]);
+      createCard(allUsers[i]);
     }
     userIndex += 5;
   })
@@ -38,18 +41,15 @@ document.body.appendChild(chargeUsers);
 chargeUsers.innerText = "Charge new 5 users";
 
 chargeUsers.addEventListener("click", () => {
-  fetch("https://jsonplaceholder.typicode.com/users")
-    .then((response) => response.json())
-    .then((data) => {
-      if (userIndex == data.length) {
-        alert("Error max user");
-      }
-      for (let i = userIndex; i < userIndex + 5; i++) {
-        createCard(data[i]);
-        userIndex += 1;
-      }
-    })
-    .catch((error) => console.log(error.message));
+  if (userIndex >= allUsers.length) {
+    alert("All users already loaded");
+  } else {
+    for (let i = userIndex; i < userIndex + 5; i++) {
+      console.log(userIndex);
+      createCard(allUsers[i]);
+      userIndex += 1;
+    }
+  }
 });
 
 /*
