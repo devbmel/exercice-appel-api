@@ -41,9 +41,14 @@ const main =
   document.querySelector("main") ||
   body.appendChild(document.createElement("main"));
 
-const divPosts = main.appendChild(document.createElement("div"));
-const titleSectionPosts = divPosts.appendChild(document.createElement("h2"));
-const divPostsButtons = divPosts.appendChild(document.createElement("div"));
+const divPostsSection = main.appendChild(document.createElement("div"));
+const titleSectionPosts = divPostsSection.appendChild(
+  document.createElement("h2")
+);
+const divPostsButtons = divPostsSection.appendChild(
+  document.createElement("div")
+);
+const divPosts = divPostsSection.appendChild(document.createElement("div"));
 
 const btnPrevPosts = divPostsButtons.appendChild(
   document.createElement("button")
@@ -62,12 +67,16 @@ btnNextPosts.textContent = "show next";
 posts = getPostsPerPage(indexPostPage);
 
 btnPrevPosts.addEventListener("click", () => {
+  // remove current posts
+  divPosts.textContent = "";
   // index <= 0 makes not sense so i added a limit
   indexPostPage > MIN_INDEX && indexPostPage--;
   posts = getPostsPerPage(indexPostPage);
 });
 
 btnNextPosts.addEventListener("click", () => {
+  // remove current posts
+  divPosts.textContent = "";
   // index >= max number of pages impossible so limit
   indexPostPage < MAX_INDEX && indexPostPage++;
   posts = getPostsPerPage(indexPostPage);
