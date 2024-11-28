@@ -45,10 +45,10 @@ const divPosts = main.appendChild(document.createElement("div"));
 const titleSectionPosts = divPosts.appendChild(document.createElement("h2"));
 const divPostsButtons = divPosts.appendChild(document.createElement("div"));
 
-const btnNextPosts = divPostsButtons.appendChild(
+const btnPrevPosts = divPostsButtons.appendChild(
   document.createElement("button")
 );
-const btnPrevPosts = divPostsButtons.appendChild(
+const btnNextPosts = divPostsButtons.appendChild(
   document.createElement("button")
 );
 
