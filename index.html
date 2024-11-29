@@ -1,13 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
   <title>Document</title>
 </head>
 
 <body>
+  <div id="commentsDiv">
+    <h2>Liste des Commentaires</h2>
+    <ul id="listComments"></ul>
+    <div id="pagination">
+      <button id="prevBtnComment">Précédent</button>
+      <button id="nextBtnComment">Suivant</button>
+      <input type="number" id="page" value="1" disabled />
+    </div>
+  </div>
+  <div id="postsDiv">
+    <h2>Liste des Posts</h2>
+    <ul id="listPosts"></ul>
+    <div id="paginationPosts">
+      <button id="prevBtnPosts">Précédent</button>
+      <button id="nextBtnPosts">Suivant</button>
+      <input type="number" id="pagePosts" value="1" disabled>
+    </div>
+  </div>
   <script src="script.js"></script>
 </body>
 
