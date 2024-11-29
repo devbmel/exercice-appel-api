@@ -10,7 +10,7 @@ async function fetchData(url) {
   }
 }
 
-function displayData(idElementToInsertData, data) {
+function displayCommentsData(idElementToInsertData, data) {
   const ul = document.getElementById(idElementToInsertData);
   ul.innerHTML = "";
 
@@ -74,13 +74,13 @@ fetchData("https://jsonplaceholder.typicode.com/comments").then((data) => {
   const prevBtn = document.getElementById("prevBtnComment");
   const idElementToInsertData = "listComments";
 
-  displayData(idElementToInsertData, paginate(data));
+  displayCommentsData(idElementToInsertData, paginate(data));
 
   nextBtn.addEventListener("click", () => {
-    eventList(idElementToInsertData, displayData, data, "page");
+    eventList(idElementToInsertData, displayCommentsData, data, "page");
   });
   prevBtn.addEventListener("click", () => {
-    eventList(idElementToInsertData, displayData, data, "page", false);
+    eventList(idElementToInsertData, displayCommentsData, data, "page", false);
   });
 });
 
