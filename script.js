@@ -73,27 +73,3 @@ chargeNextUsers.addEventListener("click", () => {
     userIndex += 5;
   }
 });
-
-/*
-const userCard = document.createElement("div");
-      userCard.classList.add("userCard");
-      const userInfo = document.createElement("ul");
-      userCard.appendChild(userInfo);
-      document.body.appendChild(userCard);
-      Object.entries(data[i]).forEach(([key, valeur]) => {
-        const li = document.createElement("li");
-        li.innerText = `${key}: `;
-        if (typeof valeur !== "object") {
-          li.innerText += valeur;
-        } else {
-          const listSupl = document.createElement("ul");
-          Object.entries(valeur).forEach(([key, value]) => {
-            const liSupl = document.createElement("li");
-            liSupl.innerText = `${key}: ${value}`;
-            listSupl.appendChild(liSupl);
-          });
-          li.appendChild(listSupl);
-        }
-        userInfo.appendChild(li);
-      });
-*/
