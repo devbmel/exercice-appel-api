@@ -21,7 +21,7 @@ const createCard = (data) => {
     }
     userInfo.appendChild(li);
   });
-  return userInfo;
+  return userCard;
 };
 
 fetch("https://jsonplaceholder.typicode.com/users")
@@ -36,19 +36,41 @@ fetch("https://jsonplaceholder.typicode.com/users")
   })
   .catch((error) => console.log(error.message));
 
-const chargeUsers = document.createElement("button");
-document.body.appendChild(chargeUsers);
-chargeUsers.innerText = "Charge new 5 users";
+const clearCards = () => {
+  cardsDiv.innerText = "";
+}
 
-chargeUsers.addEventListener("click", () => {
+const chargePrecedentUsers = document.createElement("button");
+document.body.appendChild(chargePrecedentUsers);
+chargePrecedentUsers.innerText = "Charge 5 precedent users";
+
+const chargeNextUsers = document.createElement("button");
+document.body.appendChild(chargeNextUsers);
+chargeNextUsers.innerText = "Charge 5 next users";
+
+chargePrecedentUsers.addEventListener("click", () => {
+  if (userIndex <= 5) {
+    alert("No precedent users");
+  } else {
+    userIndex -= 5;
+    clearCards();
+    for (let i = userIndex-5; i < userIndex; i++) {
+      console.log(userIndex);
+      createCard(allUsers[i]);
+    }
+  }
+});
+
+chargeNextUsers.addEventListener("click", () => {
   if (userIndex >= allUsers.length) {
     alert("All users already loaded");
   } else {
+    clearCards();
     for (let i = userIndex; i < userIndex + 5; i++) {
       console.log(userIndex);
       createCard(allUsers[i]);
-      userIndex += 1;
     }
+    userIndex += 5;
   }
 });
 
