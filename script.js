@@ -21,6 +21,21 @@ function displayData(idElementToInsertData, data) {
   }
 }
 
+function displayPostsData(idElementToInsertData, slice) {
+  let ul = document.querySelector("#" + idElementToInsertData);
+  ul.innerHTML = ``;
+  slice.forEach((element) => {
+    let li = ul.appendChild(document.createElement("li"));
+    let div = li.appendChild(document.createElement("div"));
+    let title = div.appendChild(document.createElement("h2"));
+    let text = div.appendChild(document.createElement("p"));
+    let userId = div.appendChild(document.createElement("p"));
+    title.textContent = element.title;
+    text.textContent = element.body;
+    userId.textContent = element.userId;
+  });
+}
+
 function paginate(data, currentPage = 1, dataPerPage = 20) {
   const start = (currentPage - 1) * dataPerPage;
   const end = start + dataPerPage;
@@ -40,9 +55,16 @@ function updatePagination(data, pageElementId, next = true, dataPerPage = 20) {
   return currentPage;
 }
 
-function eventList(idElementToInsertData, data, pageElementId, next = true) {
-  let currentPage = updatePagination(data, pageElementId, next);
-  displayData(idElementToInsertData, paginate(data, currentPage, 20));
+function eventList(
+  idElementToInsertData,
+  displayFunc,
+  data,
+  pageElementId,
+  next = true,
+  dataPerPage = 20
+) {
+  let currentPage = updatePagination(data, pageElementId, next, dataPerPage);
+  displayFunc(idElementToInsertData, paginate(data, currentPage, dataPerPage));
 }
 
 // MAIN
@@ -55,39 +77,39 @@ fetchData("https://jsonplaceholder.typicode.com/comments").then((data) => {
   displayData(idElementToInsertData, paginate(data));
 
   nextBtn.addEventListener("click", () => {
-    eventList(idElementToInsertData, data, "page");
+    eventList(idElementToInsertData, displayData, data, "page");
   });
   prevBtn.addEventListener("click", () => {
-    eventList(idElementToInsertData, data, "page", false);
+    eventList(idElementToInsertData, displayData, data, "page", false);
   });
 });
 
-//---------------------------------------------------------------------
-
 fetchData("https://jsonplaceholder.typicode.com/posts").then((data) => {
+  console.log(data);
   const nextBtn = document.getElementById("nextBtnPosts");
   const prevBtn = document.getElementById("prevBtnPosts");
   const idElementToInsertData = "listPosts";
 
-  displayData(idElementToInsertData, paginate(data));
+  displayPostsData(idElementToInsertData, paginate(data, 1, 5));
 
   nextBtn.addEventListener("click", () => {
-    eventList(idElementToInsertData, data, "pagePosts");
+    eventList(
+      idElementToInsertData,
+      displayPostsData,
+      data,
+      "pagePosts",
+      true,
+      5
+    );
   });
   prevBtn.addEventListener("click", () => {
-    eventList(idElementToInsertData, data, "pagePosts", false);
+    eventList(
+      idElementToInsertData,
+      displayPostsData,
+      data,
+      "pagePosts",
+      false,
+      5
+    );
   });
 });
-
-async function displayData(idElementToInsertData, slice) {
-  slice.forEach((element) => {
-    let li = idElementToInsertData.appendChild(document.createElement("li"));
-    let div = li.appendChild(document.createElement("div"));
-    let title = div.appendChild(document.createElement("h2"));
-    let text = div.appendChild(document.createElement("p"));
-    let userId = div.appendChild(document.createElement("p"));
-    title.textContent = element.title;
-    text.textContent = element.body;
-    userId.textContent = element.userId;
-  });
-}
