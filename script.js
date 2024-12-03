@@ -1,4 +1,6 @@
 async function fetchData(url) {
+  // commune
+  //URL->JSON
   try {
     const response = await fetch(url);
     if (!response.ok) {
@@ -10,13 +12,15 @@ async function fetchData(url) {
   }
 }
 
-function displayCommentsData(idElementToInsertData, data) {
+function displayCommentsData(idElementToInsertData, slice) {
+  // displays séparés, format des json différents
+  // affiche les données données en argument
   const ul = document.getElementById(idElementToInsertData);
   ul.innerHTML = "";
 
-  for (let dt of data) {
+  for (let element of slice) {
     let li = document.createElement("li");
-    li.textContent = dt.body;
+    li.textContent = element.body;
     ul.appendChild(li);
   }
 }
@@ -37,16 +41,19 @@ function displayPostsData(idElementToInsertData, slice) {
 }
 
 function paginate(data, currentPage = 1, dataPerPage = 20) {
+  // découpe le tableau avec toutes les données pour récupérer
+  //     un tableau qui comprends juste les données à afficher.
   const start = (currentPage - 1) * dataPerPage;
   const end = start + dataPerPage;
   return data.slice(start, end);
 }
 
 function updatePagination(data, pageElementId, next = true, dataPerPage = 20) {
+  // determine si on peut changer de page et effectue le changement si possible
   const currentPageElement = document.getElementById(pageElementId);
   let currentPage = currentPageElement.value;
 
-  if (next && currentPage * dataPerPage < data.length) {
+  if (next && currentPage < Math.ceil(data.length / dataPerPage)) {
     currentPage++;
   } else if (!next && currentPage > 1) {
     currentPage--;
@@ -57,12 +64,13 @@ function updatePagination(data, pageElementId, next = true, dataPerPage = 20) {
 
 function eventList(
   idElementToInsertData,
-  displayFunc,
-  data,
-  pageElementId,
-  next = true,
+  displayFunc, // paramètre qui contient la fonction d'affichage à appeler
+  data, // array de toute les données soit commentaire, soit posts
+  pageElementId, // id de l'element contenant le numéro de la page  actuel
+  next = true, // variable qui determine si on va a la page suivante(si next==true) ou précédente(next==false)
   dataPerPage = 20
 ) {
+  // gère tout ce qui se passe quand un bouton est appuyé
   let currentPage = updatePagination(data, pageElementId, next, dataPerPage);
   displayFunc(idElementToInsertData, paginate(data, currentPage, dataPerPage));
 }
@@ -113,7 +121,9 @@ fetchData("https://jsonplaceholder.typicode.com/posts").then((data) => {
     );
   });
 });
+
 //users
+
 const cardsDiv = document.createElement("div");
 cardsDiv.classList.add("cards-div");
 document.body.appendChild(cardsDiv);
@@ -154,7 +164,7 @@ fetch("https://jsonplaceholder.typicode.com/users")
 
 const clearCards = () => {
   cardsDiv.innerText = "";
-}
+};
 
 const chargePrecedentUsers = document.createElement("button");
 document.body.appendChild(chargePrecedentUsers);
@@ -170,7 +180,7 @@ chargePrecedentUsers.addEventListener("click", () => {
   } else {
     userIndex -= 5;
     clearCards();
-    for (let i = userIndex-5; i < userIndex; i++) {
+    for (let i = userIndex - 5; i < userIndex; i++) {
       console.log(userIndex);
       createCard(allUsers[i]);
     }
